@@ -1,0 +1,4 @@
+*.js linguist-language=JavaScript
+*.jsx linguist-language=JavaScript
+/client/** linguist-language=JavaScript
+/server/** linguist-language=JavaScript
