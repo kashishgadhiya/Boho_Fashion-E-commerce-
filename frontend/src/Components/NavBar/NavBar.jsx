@@ -76,7 +76,7 @@ const NavBar = () => {
               </li>
               <li onClick={() => setMenu("About Us")}>
                 <Link onClick={scrollToAboutus}> About Us </Link>
-                {menu === "About Us" ? <hr /> : <></>}
+               
               </li>
             </ul>
 

@@ -54,7 +54,7 @@ const ShopCategory = (props) => {
             Share your look and mention us using <strong>@BohoFashion</strong> or with the tag <strong>#bohocommunity</strong></p>
           </div>
           
-          <div className='flex items-center lg:justify-between flex-wrap  justify-center'>
+          <div className='flex items-center lg:justify-between flex-wrap  justify-center '>
         
             <Search handleFilter={handleFilterProducts} />
             <Filter products={filteredProducts} setProducts={setFilteredProducts} />
