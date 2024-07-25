@@ -1,0 +1,28 @@
+{
+  "files": {
+    "main.css": "/static/css/main.b3b3314c.css",
+    "main.js": "/static/js/main.292d0286.js",
+    "static/js/453.d855a71b.chunk.js": "/static/js/453.d855a71b.chunk.js",
+    "static/media/hero_3.png": "/static/media/hero_3.499488efeaca5708a54f.png",
+    "static/media/red_t-shirt.jpeg": "/static/media/red_t-shirt.35623505f54a9c553678.jpeg",
+    "static/media/black.jpeg": "/static/media/black.d9dce8c44a99e211904e.jpeg",
+    "static/media/green_t-shirtt.jpeg": "/static/media/green_t-shirtt.2e581b8e372711587c8f.jpeg",
+    "static/media/whitw_t-shirt.jpeg": "/static/media/whitw_t-shirt.27fe76034262bf1474dc.jpeg",
+    "static/media/banner.webp": "/static/media/banner.a76480420bd2be809779.webp",
+    "static/media/blue_t-shirt.jpeg": "/static/media/blue_t-shirt.5e63a4cdf61f857c6bf7.jpeg",
+    "static/media/delete_icon.png": "/static/media/delete_icon.93b17075210720275c45.png",
+    "static/media/logo.png": "/static/media/logo.4f10fee2589e9d608640.png",
+    "static/media/slick.svg": "/static/media/slick.2630a3e3eab21c607e21.svg",
+    "static/media/slick.eot": "/static/media/slick.a4e97f5a2a64f0ab1323.eot",
+    "static/media/slick.ttf": "/static/media/slick.c94f7671dcc99dce43e2.ttf",
+    "static/media/slick.woff": "/static/media/slick.295183786cd8a1389865.woff",
+    "index.html": "/index.html",
+    "main.b3b3314c.css.map": "/static/css/main.b3b3314c.css.map",
+    "main.292d0286.js.map": "/static/js/main.292d0286.js.map",
+    "453.d855a71b.chunk.js.map": "/static/js/453.d855a71b.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.b3b3314c.css",
+    "static/js/main.292d0286.js"
+  ]
+}

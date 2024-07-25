@@ -1,0 +1,24 @@
+
+.Navhr hr {
+    border: none;
+    width: 80%;
+    height: 3px;
+    border-radius: 10px;
+    background-color:#a00220;
+
+}
+.count{
+    margin-top: -35px;
+    margin-left: 13px;
+    
+    border-radius: 11px;
+    font-size: 14px;
+    background-color: red;
+    color: white;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}

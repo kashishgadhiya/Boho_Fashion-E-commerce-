@@ -1,0 +1,191 @@
+var abTest = (window.abTest = {
+  waitUntil: function (conditionFunction, interval = 200) {
+    return new Promise((resolve, reject) => {
+      const poll = setInterval(() => {
+        try {
+          if (conditionFunction()) {
+            clearInterval(poll);
+            resolve();
+          }
+        } catch {}
+      }, interval);
+    });
+  },
+
+  store: {
+    data: JSON.parse(localStorage.getItem("abStore")) || {},
+    session: JSON.parse(sessionStorage.getItem("abStore")) || {},
+    get: function (name) {
+      if (
+        this.data.hasOwnProperty(name) &&
+        this.data[name].expire > Date.now()
+      ) {
+        return this.data[name].value;
+      } else if (this.session.hasOwnProperty(name)) {
+        return this.session[name].value;
+      } else {
+        return false;
+      }
+    },
+    set: function (name, value, days, hours) {
+      days = typeof days === "undefined" ? 365 : days;
+      var exdate = new Date();
+      if (hours) {
+        exdate.setTime(exdate.getTime() + hours * 60 * 60 * 1000);
+      } else {
+        exdate.setDate(exdate.getDate() + days);
+      }
+      var data = {
+        value: value,
+        expire: exdate.getTime(),
+      };
+      if (days === 0 && hours === 0) {
+        this.session[name] = data;
+      } else {
+        this.data[name] = data;
+      }
+
+      this.save();
+    },
+    remove: function (name) {
+      delete this.data[name];
+      delete this.session[name];
+      this.save();
+    },
+    save: function () {
+      localStorage.setItem("abStore", JSON.stringify(this.data));
+      sessionStorage.setItem("abStore", JSON.stringify(this.session));
+    },
+  },
+
+  addArticle: function (a) {
+    if (
+      typeof a === "object" &&
+      a.hasOwnProperty("event") &&
+      a.hasOwnProperty("article")
+    ) {
+      var data = JSON.parse(sessionStorage.getItem("abStoredArticles")) || [];
+      var exists = data.some(function (i) {
+        return i.event === a.event && i.article === a.article;
+      });
+      if (!exists) {
+        data.push(a);
+        sessionStorage.setItem("abStoredArticles", JSON.stringify(data));
+      }
+    }
+  },
+
+  devMode: function (toggle) {
+    if (toggle === true || toggle === false) {
+      this.store.set("devMode", toggle);
+    } else {
+      return this.store.get("devMode");
+    }
+  },
+
+  get qaUrl() {
+    return this.store.get("qaTool");
+  },
+
+  initQa: function () {
+    if (this.qaUrl && !this.qaInitialized) {
+      var abQa = document.createElement("script");
+      abQa.setAttribute("src", abTest.qaUrl + "?tt=" + new Date().getTime());
+      document.head.appendChild(abQa);
+      this.qaInitialized = true;
+    }
+  },
+
+  qaInitialized: false,
+
+  log: function (d, b, c) {
+    if (this.devMode()) {
+      var fg = typeof c !== "undefined" ? c : "white";
+      var bg = typeof b !== "undefined" ? b : "red";
+      console.log(
+        "%cA/B-Log:",
+        "background: " + bg + "; color: " + fg + "; font-size: 12px",
+        d
+      );
+    }
+  },
+
+  visitor: {
+    experiments: [],
+    variations: [],
+  },
+
+  trackExperiment: function (exp_id, var_id) {
+    abTest.log("GA Track experiment: " + exp_id + " - Variation: " + var_id);
+    if (!abTest.visitor.experiments.includes(exp_id)) {
+      abTest.visitor.experiments.push(exp_id);
+      abTest.visitor.variations.push(var_id);
+      abTest.triggerUtag();
+    }
+  },
+
+  triggerUtag: function () {
+    if (!abTest.utagTriggered) {
+      abTest.utagTriggered = true;
+      abTest
+        .waitUntil(function () {
+          return (
+            "utag" in window &&
+            "link" in utag &&
+            "tiq" in window &&
+            "pageData" in tiq &&
+            "selected_market" in tiq.pageData
+          );
+        })
+        .then(function () {
+          setTimeout(function () {
+            abTest.log("Running utag.link");
+            utag.link({ event_type: "OPTIMIZELY_CONDITIONAL" });
+            abTest.utagTriggered = false;
+          }, 500);
+        });
+    }
+  },
+  utagTriggered: false,
+  expLength: 0,
+});
+
+if (window.location.href.indexOf("orderConfirmation") > -1) {
+  (function () {
+    try {
+      var re = new RegExp("ab4900=([^;]+)");
+      var value = re.exec(document.cookie);
+      var cookievalue =
+        value !== null && value[1] !== "false" ? decodeURI(value[1]) : false;
+
+      if (!cookievalue) {
+        var market = window.location.pathname.split("/")[1];
+        var marketKeys = {
+          de_de: "HMXHMD882",
+          en_us: "HMPCDB853",
+          en_gb: "HMDBXQ194",
+          nl_nl: "HMKLZY794",
+          pl_pl: "HMFNDP832",
+          fr_fr: "HMFXKQ169",
+          sv_se: "HMGZDN021",
+          de_at: "HMPQLW370",
+          fi_fi: "HMVGCX203",
+          sv_fi: "HMVGCX203",
+        };
+
+        var nmg = document.createElement("script");
+        if (marketKeys[market]) {
+          nmg.src = "//gs.nmgassets.com/" + marketKeys[market] + ".js";
+        } else {
+          nmg.src = "//gs.nmgassets.com/HMNJFZ534.js";
+        }
+        nmg.setAttribute("type", "text/javascript");
+        nmg.async = true;
+        document.head.appendChild(nmg);
+      }
+    } catch (e) {}
+  })();
+}
+
+// QA Tool
+// abTest.initQa();
