@@ -46,7 +46,7 @@ const ShopCategory = (props) => {
   };
 
   return (
-    <div className=' max-w-6xl mx-auto'>
+    <div className=' max-w-6xl mx-auto min-h-screen'>
   
           <div className='my-5 text-center'>
             <h2 className='text-3xl font-semibold'>BOHO <br/>COMMUNITY</h2>

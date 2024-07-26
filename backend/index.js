@@ -8,14 +8,14 @@ const path = require("path");
 const bodyParser = require('body-parser');
 const cors = require("cors");
 require("dotenv").config();
-const Razorpay = require('razorpay');
+
 
 const product = require("./models/product");
 const Subscriber = require("./models/emailSubscribe");
 const User = require("./models/user");
 const orderModel = require("./models/order")
 const ProductDesign = require("./models/productDesign")
-const { nextTick } = require("process");
+const stripe = require("stripe")(process.env.STRIPE_SECRETKEY)
 
 app.use(express.json());
 app.use(cors());
@@ -30,27 +30,33 @@ mongoose
   .catch((err) => console.error("MongoDB connection error:", err));
 const jwtSecret = process.env.JWT_SECRET;
 // payment
-const  razorpay = new Razorpay({
-  key_id: process.env.RAZORPAY_APIKEY,
-  key_secret: process.env.RAZORPAY_SECRETKEY,
-});
+app.post("/create-checkout-session",async(req,res)=>{
+        const {products} = req.body
+        console.log(products)
+        const lineItems=products.map((product)=>({
+          price_data:{
+            currency:"inr",
+            product_data:{
+              name:product.name,
+              images:[product.image]
+            },
+            unit_amount:product.price*100,
 
-app.get("/payment/checkout", async(req,res)=>{
-  const {name,amount}= req.body
-  const order = await razorpay.orders.create({
-    amount : Number(amount*100),
-    currency :"INR",
-   
 
-  }) 
-  await  orderModel.create({
-    order_id :order.id,
-    name : name,
-    amount :amount
+          },
+          quantity:product.quantity,
+        }))
+        const session = await stripe.checkout.sessions.create({
+          payment_method_types:["card"],
+          line_items:lineItems,
+          mode:"payment",
+          success_url:"http://localhost:3000/success",
+          cancel_url:"http://localhost:3000/fail",
 
-  })
-  console.log({order})
-  res.json(order)
+        
+        
+        })
+        res.json({id:session.id})
 })
 
 // API Creation

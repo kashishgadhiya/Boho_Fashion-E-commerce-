@@ -71,3 +71,56 @@ footer {
   width: 100%;
   margin: 0 auto;
 }
+
+/* success  */
+@keyframes scaleAnimation {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.animated-image {
+  animation: scaleAnimation 5s infinite;
+}
+
+
+
+
+/* fail*/
+@keyframes shake {
+  0% {
+    transform: translateX(-10px);
+  }
+  50% {
+    transform: translateX(10px);
+  }
+  100% {
+    transform: translateX(-10px);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.5;
+  }
+}
+
+.animate-shake {
+  animation: shake 2s ease-in-out;
+}
+
+.animate-pulse {
+  animation: pulse 2s infinite;
+}

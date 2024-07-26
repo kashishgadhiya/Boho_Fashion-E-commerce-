@@ -6,7 +6,7 @@ const Cart = () => {
   
   return (
     <>
-    <div className='mb-72'>
+    <div className='min-h-screen'>
       <CardItem/>
     </div>
       

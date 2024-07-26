@@ -10,7 +10,7 @@ const Product = () => {
   const {productId} = useParams()
   const product = all_product.find((e)=>e.id === Number(productId))
   return (
-    <div className=''>
+    <div className='min-h-screen'>
 
       <ProductPage product={product} />
       <ProductDisplay  product={product}/>
