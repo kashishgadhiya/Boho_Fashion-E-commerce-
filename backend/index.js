@@ -50,8 +50,8 @@ app.post("/create-checkout-session",async(req,res)=>{
           payment_method_types:["card"],
           line_items:lineItems,
           mode:"payment",
-          success_url:"http://localhost:3000/success",
-          cancel_url:"http://localhost:3000/fail",
+          success_url:"https://boho-fashion-e-commerce.onrender.com/success",
+          cancel_url:"https://boho-fashion-e-commerce.onrender.com/fail",
 
         
         
