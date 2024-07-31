@@ -15,6 +15,7 @@ const Subscriber = require("./models/emailSubscribe");
 const User = require("./models/user");
 const orderModel = require("./models/order")
 const ProductDesign = require("./models/productDesign")
+// const Subscriber = require("./models/emailSubscribe")
 const stripe = require("stripe")(process.env.STRIPE_SECRETKEY)
 
 app.use(express.json());
@@ -65,6 +66,27 @@ app.get("/", (req, res) => {
 });
 
 // Image upload
+// const storage = multer.diskStorage({
+//   destination: "./upload/images",
+//   filename: (req, file, cb) => {
+//     cb(null, `${file.fieldname}_${Date.now()}${path.extname(file.originalname)}`);
+//   },
+// });
+
+// const upload = multer({ storage: storage });
+
+// // Endpoint for images
+// app.use("/images", express.static("upload/images"));
+// app.post("/upload", upload.single("product"), (req, res) => {
+//   res.json({
+//     success: 1,
+//     // image_url: `https://e-commerce-website-h0yp.onrender.com/images/${req.file.filename}`,
+//     image_url: `https://e-commerce-backend-2-bxa8.onrender.com/images/${req.file.filename}`,
+//     // image_url: `http://localhost:4000/images/${req.file.filename}`,
+//   });
+// });
+
+// Image upload
 const storage = multer.diskStorage({
   destination: "./upload/images",
   filename: (req, file, cb) => {
@@ -76,14 +98,34 @@ const upload = multer({ storage: storage });
 
 // Endpoint for images
 app.use("/images", express.static("upload/images"));
+
 app.post("/upload", upload.single("product"), (req, res) => {
+   const baseUrl = process.env.BASE_URL;
+   console.log(baseUrl)
+  const imageUrl = `${"https://boho-fashion-e-commerce.onrender.com"}/images/${req.file.filename}`;
+  
   res.json({
     success: 1,
-    // image_url: `https://e-commerce-website-h0yp.onrender.com/images/${req.file.filename}`,
-    image_url: `https://e-commerce-backend-2-bxa8.onrender.com/images/${req.file.filename}`,
-    // image_url: `http://localhost:4000/images/${req.file.filename}`,
+    image_url: imageUrl,
   });
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -105,9 +147,9 @@ app.post("/addproduct", async (req, res) => {
     category: req.body.category,
     price: req.body.price,
   });
-  // console.log(newproduct);
+  console.log(newproduct);
   await newproduct.save();
-  // console.log("save");
+  console.log("save");
   res.json({
     success: true,
     name: req.body.name,
@@ -292,6 +334,27 @@ app.post('/addProductDesign', async (req, res) => {
 });
 
 
+// users
+app.get('/users', async (req, res) => {
+  try {
+    const users = await User.find({}, 'email date'); 
+    res.json(users);
+  } catch (error) {
+    console.error('Error fetching users:', error);
+    res.status(500).json({ message: 'Error fetching users' });
+  }
+});
+
+// Add this route to your existing routes
+app.get('/subscribersdata', async (req, res) => {
+  try {
+    const subscribers = await Subscriber.find({});
+    res.json(subscribers);
+  } catch (error) {
+    console.error('Error fetching subscribers:', error);
+    res.status(500).json({ message: 'Error fetching subscribers' });
+  }
+});
 
 
 app.post('/subscribe', async (req, res) => {

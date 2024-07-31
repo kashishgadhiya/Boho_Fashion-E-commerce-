@@ -9,8 +9,8 @@ const Listproduct = () => {
   const [totalCount, setTotalCount] = useState(0);
 
   const fetchInfo = async () => {
-    setLoading(true); 
-    await fetch('https://e-commerce-backend-2-bxa8.onrender.com/allproduct')
+    setLoading(false); 
+    await fetch('https://boho-fashion-e-commerce.onrender.com/allproduct')
       .then((res) => res.json())
       .then((data) => {
         setAllproduct(data);
@@ -25,7 +25,7 @@ const Listproduct = () => {
 
   const removeProduct = async (id) => {
     setLoading(true); 
-    await fetch("https://e-commerce-backend-2-bxa8.onrender.com/removeproduct", {
+    await fetch("https://boho-fashion-e-commerce.onrender.com/removeproduct", {
       method: 'POST',
       headers: {
         Accept: 'application/json',

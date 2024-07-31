@@ -92,7 +92,7 @@ const LoginSignup = () => {
         formdata.email === "kashishgadhiya24@gmail.com" &&
         formdata.password === "123456789"
       ) {
-        window.location.replace("https://bohofashion-admin.netlify.app/");
+        window.location.replace("https://boho-fashion-admin.vercel.app/");
       } else {
         window.location.replace("/");
       }

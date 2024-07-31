@@ -4,6 +4,8 @@ import AddProduct from '../../components/AddProduct'
 
 import {Routes,Route} from "react-router-dom"
 import Listproduct from '../../components/Listproduct'
+import User from '../../components/User'
+import Subscribers from '../../components/Subscribers'
 
 const Admin = () => {
   return (
@@ -14,6 +16,8 @@ const Admin = () => {
     <Routes>
                <Route path='/' element={  <AddProduct/>}></Route>
                <Route path='/listproduct' element={  <Listproduct/>}></Route>
+               <Route path='/users' element={  <User/>}></Route>
+               <Route path='/subscribers' element={  <Subscribers/>}></Route>
                </Routes>
     
     </div>
