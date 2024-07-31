@@ -1,9 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import Loading from './Loading'; // Assuming you have a Loading component
 
+
+
+import React, { useEffect, useState } from 'react';
+import Loading from './Loading'; 
 const User = () => {
   const [users, setUsers] = useState([]);
+  const [filteredUsers, setFilteredUsers] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [sortOrder, setSortOrder] = useState('latest');
 
   const fetchUsers = async () => {
     setLoading(true);
@@ -11,6 +16,7 @@ const User = () => {
       const response = await fetch('http://localhost:4000/users');
       const data = await response.json();
       setUsers(data);
+      setFilteredUsers(data);
     } catch (error) {
       console.error('Error fetching users:', error);
     } finally {
@@ -22,29 +28,75 @@ const User = () => {
     fetchUsers();
   }, []);
 
+  useEffect(() => {
+    let filtered = users.filter(user =>
+      user.email.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+    if (sortOrder === 'latest') {
+      filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
+    } else {
+      filtered.sort((a, b) => new Date(a.date) - new Date(b.date));
+    }
+
+    setFilteredUsers(filtered);
+  }, [searchQuery, sortOrder, users]);
+
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const handleSortChange = (e) => {
+    setSortOrder(e.target.value);
+  };
+
   return (
-    <div className='mt-5'>
-      <p className='text-xl py-1 font-semibold my-5'>Users</p>
+    <div className='mt-5 w-[90%] mx-10'>
+      <div className='mb-4'>
+        <input
+          type='text'
+          placeholder='Search by email...'
+          className='py-2 px-4 border border-gray-300 rounded-lg w-full mb-2'
+          value={searchQuery}
+          onChange={handleSearchChange}
+        />
+        <select
+          className='py-2 px-4 border border-gray-300 rounded-lg w-full'
+          value={sortOrder}
+          onChange={handleSortChange}
+        >
+          <option value='latest'>Latest First</option>
+          <option value='earliest'>Earliest First</option>
+        </select>
+      </div>
       {loading ? (
         <Loading />
       ) : (
         <div className='overflow-x-auto'>
-          <table className='min-w-full bg-white'>
-            <thead>
-              <tr className='w-full bg-gray-200'>
-                <th className='py-2 px-4 border-b text-left'>Email</th>
-                <th className='py-2 px-4 border-b text-left'>Created At</th>
+          <table className='min-w-full bg-white border border-gray-300'>
+            <thead className='bg-gray-200'>
+              <tr>
+                <th className='py-2 px-4 border-b text-left text-gray-600'>Email</th>
+                <th className='py-2 px-4 border-b text-left text-gray-600'>Created At</th>
               </tr>
             </thead>
             <tbody>
-              {users.map((user) => (
-                <tr key={user._id}>
-                  <td className='py-2 px-4 border-b'>{user.email}</td>
-                  <td className='py-2 px-4 border-b'>
-                    {new Date(user.date).toLocaleString()}
+              {filteredUsers.length > 0 ? (
+                filteredUsers.map((user) => (
+                  <tr key={user._id} className='hover:bg-gray-100'>
+                    <td className='py-2 px-4 border-b'>{user.email}</td>
+                    <td className='py-2 px-4 border-b'>
+                      {new Date(user.date).toLocaleString()}
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan='2' className='py-2 px-4 text-center text-gray-500'>
+                    No users found
                   </td>
                 </tr>
-              ))}
+              )}
             </tbody>
           </table>
         </div>

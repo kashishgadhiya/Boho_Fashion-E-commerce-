@@ -5,18 +5,17 @@ const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const multer = require("multer");
 const path = require("path");
-const bodyParser = require('body-parser');
+const bodyParser = require("body-parser");
 const cors = require("cors");
 require("dotenv").config();
-
 
 const product = require("./models/product");
 const Subscriber = require("./models/emailSubscribe");
 const User = require("./models/user");
-const orderModel = require("./models/order")
-const ProductDesign = require("./models/productDesign")
+const orderModel = require("./models/order");
+const ProductDesign = require("./models/productDesign");
 // const Subscriber = require("./models/emailSubscribe")
-const stripe = require("stripe")(process.env.STRIPE_SECRETKEY)
+const stripe = require("stripe")(process.env.STRIPE_SECRETKEY);
 
 app.use(express.json());
 app.use(cors());
@@ -31,34 +30,29 @@ mongoose
   .catch((err) => console.error("MongoDB connection error:", err));
 const jwtSecret = process.env.JWT_SECRET;
 // payment
-app.post("/create-checkout-session",async(req,res)=>{
-        const {products} = req.body
-        console.log(products)
-        const lineItems=products.map((product)=>({
-          price_data:{
-            currency:"inr",
-            product_data:{
-              name:product.name,
-              images:[product.image]
-            },
-            unit_amount:product.price*100,
-
-
-          },
-          quantity:product.quantity,
-        }))
-        const session = await stripe.checkout.sessions.create({
-          payment_method_types:["card"],
-          line_items:lineItems,
-          mode:"payment",
-          success_url:"https://boho-fashion-e-commerce.onrender.com/success",
-          cancel_url:"https://boho-fashion-e-commerce.onrender.com/fail",
-
-        
-        
-        })
-        res.json({id:session.id})
-})
+app.post("/create-checkout-session", async (req, res) => {
+  const { products } = req.body;
+  console.log(products);
+  const lineItems = products.map((product) => ({
+    price_data: {
+      currency: "inr",
+      product_data: {
+        name: product.name,
+        images: [product.image],
+      },
+      unit_amount: product.price * 100,
+    },
+    quantity: product.quantity,
+  }));
+  const session = await stripe.checkout.sessions.create({
+    payment_method_types: ["card"],
+    line_items: lineItems,
+    mode: "payment",
+    success_url: "https://boho-fashion-e-commerce.onrender.com/success",
+    cancel_url: "https://boho-fashion-e-commerce.onrender.com/fail",
+  });
+  res.json({ id: session.id });
+});
 
 // API Creation
 app.get("/", (req, res) => {
@@ -90,7 +84,10 @@ app.get("/", (req, res) => {
 const storage = multer.diskStorage({
   destination: "./upload/images",
   filename: (req, file, cb) => {
-    cb(null, `${file.fieldname}_${Date.now()}${path.extname(file.originalname)}`);
+    cb(
+      null,
+      `${file.fieldname}_${Date.now()}${path.extname(file.originalname)}`
+    );
   },
 });
 
@@ -100,34 +97,17 @@ const upload = multer({ storage: storage });
 app.use("/images", express.static("upload/images"));
 
 app.post("/upload", upload.single("product"), (req, res) => {
-   const baseUrl = process.env.BASE_URL;
-   console.log(baseUrl)
-  const imageUrl = `${"https://boho-fashion-e-commerce.onrender.com"}/images/${req.file.filename}`;
-  
+  const baseUrl = process.env.BASE_URL;
+  console.log(baseUrl);
+  const imageUrl = `${"https://boho-fashion-e-commerce.onrender.com"}/images/${
+    req.file.filename
+  }`;
+
   res.json({
     success: 1,
     image_url: imageUrl,
   });
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // Creating a product
 app.post("/addproduct", async (req, res) => {
@@ -156,7 +136,6 @@ app.post("/addproduct", async (req, res) => {
   });
 });
 
-
 // Delete a product
 app.post("/removeproduct", async (req, res) => {
   await product.findOneAndDelete({ id: req.body.id });
@@ -167,7 +146,7 @@ app.post("/removeproduct", async (req, res) => {
     name: req.body.name,
   });
 });
- // getting all product
+// getting all product
 app.get("/allproduct", async (req, res) => {
   let products = await product.find({});
   // console.log("All products")
@@ -175,18 +154,15 @@ app.get("/allproduct", async (req, res) => {
   res.send(products);
 });
 
-
 // add user
 app.post("/signup", async (req, res) => {
   // check user has account
   let check = await User.findOne({ email: req.body.email });
   if (check) {
-    return res
-      .status(400)
-      .json({
-        success: false,
-        errors: "Existing user found with same Email address",
-      });
+    return res.status(400).json({
+      success: false,
+      errors: "Existing user found with same Email address",
+    });
   }
   // cart
   let cart = {};
@@ -301,75 +277,71 @@ app.post("/getcart", fetchUser, async (req, res) => {
 });
 
 // customized product design
-app.post('/addProductDesign', async (req, res) => {
+app.post("/addProductDesign", async (req, res) => {
   try {
     const {
-      
       tshirtcolor,
       upperText,
       lowerText,
       Designimg,
       textSize,
       textColor,
-          } = req.body;
+    } = req.body;
 
     const newProductDesign = new ProductDesign({
-    
       tshirtcolor,
       upperText,
       lowerText,
       Designimg,
       textSize,
-      textColor
-      
+      textColor,
     });
 
     const savedProductDesign = await newProductDesign.save();
 
     res.status(201).json(savedProductDesign);
   } catch (err) {
-    console.error('Error adding product design:', err);
-    res.status(500).json({ error: 'Internal Server Error' });
+    console.error("Error adding product design:", err);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
-
 
 // users
-app.get('/users', async (req, res) => {
+app.get("/users", async (req, res) => {
   try {
-    const users = await User.find({}, 'email date'); 
+    const users = await User.find({}, "email date");
     res.json(users);
   } catch (error) {
-    console.error('Error fetching users:', error);
-    res.status(500).json({ message: 'Error fetching users' });
+    console.error("Error fetching users:", error);
+    res.status(500).json({ message: "Error fetching users" });
   }
 });
 
-// Add this route to your existing routes
-app.get('/subscribersdata', async (req, res) => {
+// Backend route to fetch subscribers
+app.get("/subscribersdata", async (req, res) => {
   try {
     const subscribers = await Subscriber.find({});
     res.json(subscribers);
   } catch (error) {
-    console.error('Error fetching subscribers:', error);
-    res.status(500).json({ message: 'Error fetching subscribers' });
+    console.error("Error fetching subscribers:", error);
+    res.status(500).json({ message: "Error fetching subscribers" });
   }
 });
 
-
-app.post('/subscribe', async (req, res) => {
+app.post("/subscribe", async (req, res) => {
   const { email } = req.body;
 
   try {
     const newSubscriber = new Subscriber({ email });
     await newSubscriber.save();
-    res.status(201).json({ message: 'Subscription successful', subscriber: newSubscriber });
+    res
+      .status(201)
+      .json({ message: "Subscription successful", subscriber: newSubscriber });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: 'Subscription failed' });
+    res.status(500).json({ message: "Subscription failed" });
   }
 });
-
 
 app.listen(port, (error) => {
   if (!error) {
