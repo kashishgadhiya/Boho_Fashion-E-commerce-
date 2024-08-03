@@ -1,0 +1,24 @@
+@keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .email-container {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    visibility: hidden;
+  }
+  
+  .email-container.in-view {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+  }
+  

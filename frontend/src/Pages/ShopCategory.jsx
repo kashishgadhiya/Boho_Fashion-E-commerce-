@@ -31,6 +31,7 @@ const ShopCategory = (props) => {
   }, [all_product, props.category]);
 
  
+  
   const handleFilterProducts = (inputValue) => {
     const newData = products.filter(item =>
       item.name.toLowerCase().includes(inputValue.toLowerCase())

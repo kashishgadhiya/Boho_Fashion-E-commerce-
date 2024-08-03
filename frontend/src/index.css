@@ -124,3 +124,30 @@ footer {
 .animate-pulse {
   animation: pulse 2s infinite;
 }
+
+.title-animate {
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 1s ease-out, transform 1s ease-out;
+}
+
+.title-animate.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+.carousel-animate {
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: opacity 1s ease-out, transform 1s ease-out;
+}
+
+.carousel-animate.in-view {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+
+
+/* topnav */

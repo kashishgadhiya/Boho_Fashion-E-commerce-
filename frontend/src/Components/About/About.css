@@ -1,15 +1,32 @@
-.slide-in-right {
-    animation: slideInRight 0.5s ease-out forwards;
-  }
-  
-  @keyframes slideInRight {
-    from {
-      transform: translateX(-100%);
-      opacity: 0;
-    }
-    to {
-      transform: translateX(0);
-      opacity: 1;
-    }
-  }
-  
+
+.slide-in-section {
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 1s ease-out, transform 1s ease-out;
+}
+
+.slide-in-section.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.slide-in-title {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 1s ease-out, transform 1s ease-out;
+}
+
+.slide-in-title.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+.slide-in-paragraph {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 1s ease-out, transform 1s ease-out;
+}
+
+.slide-in-paragraph.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
