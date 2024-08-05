@@ -1,5 +1,7 @@
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 4000 || 4001;
 const express = require("express");
+
+
 const app = express();
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
@@ -62,7 +64,7 @@ app.get("/", (req, res) => {
 
 
 
-// Image upload
+// // Image upload
 const storage = multer.diskStorage({
   destination: "./upload/images",
   filename: (req, file, cb) => {
@@ -81,7 +83,9 @@ app.use("/images", express.static("upload/images"));
 app.post("/upload", upload.single("product"), (req, res) => {
   const baseUrl = process.env.BASE_URL;
   console.log(baseUrl);
-  const imageUrl = `${req.file.filename}`;
+  // const imageUrl = `${req.file.filename}`;
+  //  const image_url = `https://e-commerce-website-h0yp.onrender.com/images/${req.file.filename}`;
+  const imageUrl = `${"https://boho-fashion-e-commerce.onrender.com"}/images/${req.file.filename}`;
   
 
   res.json({
@@ -89,6 +93,21 @@ app.post("/upload", upload.single("product"), (req, res) => {
     image_url: imageUrl,
   });
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Creating a product
 app.post("/addproduct", async (req, res) => {

@@ -1,16 +1,15 @@
 
 
 import React, { useEffect, useState } from 'react';
-import Loading from './Loading'; 
-
+import Loading from './Loading';
 
 const OrderModal = ({ order, onClose }) => {
   if (!order) return null;
 
   return (
-    <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex justify-center items-center overflow-auto">
-      <div className="bg-white p-6 rounded-md shadow-lg w-3/4 max-w-2xl max-h-[90vh] overflow-y-auto">
-        <h2 className="text-xl font-semibold mb-4 text-[#a00220]">Order Details</h2>
+    <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex justify-center items-center p-4">
+      <div className="bg-white p-4 sm:p-6 md:p-8 lg:p-10 rounded-md shadow-lg w-full max-w-lg md:max-w-xl lg:max-w-2xl max-h-[90vh] overflow-y-auto">
+        <h2 className="text-lg sm:text-xl font-semibold mb-4 text-[#a00220]">Order Details</h2>
         <p><strong>Order ID:</strong> {order._id}</p>
         <p><strong>Customer:</strong> {order.firstName} {order.lastName}</p>
         <p><strong>Email:</strong> {order.email}</p>
@@ -19,7 +18,7 @@ const OrderModal = ({ order, onClose }) => {
         <p><strong>Total Amount:</strong> Rs.{order.totalAmount}</p>
         <p><strong>Date:</strong> {new Date(order.date).toLocaleDateString()}</p>
 
-        <h3 className="text-lg font-semibold mt-4">Cart Items:</h3>
+        <h3 className="text-md sm:text-lg font-semibold mt-4">Cart Items:</h3>
         <ul className="list-disc list-inside">
           {order.cartItems.map(item => (
             <li key={item.id} className="flex items-center mb-4">
@@ -69,7 +68,7 @@ const AdminOrders = () => {
   }, []);
 
   if (loading) {
-    return <Loading />; 
+    return <Loading />;
   }
 
   if (error) {
@@ -81,33 +80,33 @@ const AdminOrders = () => {
   }
 
   return (
-    <div className="max-w-6xl mx-auto p-6 bg-white shadow-lg rounded-lg min-h-screen mt-10">
-      <h1 className="text-2xl font-semibold mb-6 text-[#a00220]">All Orders</h1>
+    <div className="max-w-6xl mx-auto p-4 sm:p-6 bg-white shadow-lg rounded-lg min-h-screen mt-10">
+      <h1 className="text-xl sm:text-2xl font-semibold mb-6 text-[#a00220]">All Orders</h1>
 
       <div className="overflow-x-auto">
         <div className="overflow-y-auto max-h-[80vh]">
           <table className="w-full bg-white border border-gray-200 rounded-md shadow-sm">
             <thead>
               <tr className="bg-gray-100 text-left">
-                <th className="p-4 border-b">Order ID</th>
-                <th className="p-4 border-b">Customer</th>
-                <th className="p-4 border-b">Email</th>
-                <th className="p-4 border-b">Total Amount</th>
-                <th className="p-4 border-b">Date</th>
-                <th className="p-4 border-b">Actions</th>
+                <th className="p-2 sm:p-4 border-b text-xs sm:text-base">Order ID</th>
+                <th className="p-2 sm:p-4 border-b text-xs sm:text-base">Customer</th>
+                <th className="p-2 sm:p-4 border-b text-xs sm:text-base">Email</th>
+                <th className="p-2 sm:p-4 border-b text-xs sm:text-base">Total Amount</th>
+                <th className="p-2 sm:p-4 border-b text-xs sm:text-base">Date</th>
+                <th className="p-2 sm:p-4 border-b text-xs sm:text-base">Actions</th>
               </tr>
             </thead>
             <tbody>
               {orders.map((order) => (
-                <tr key={order._id}>
-                  <td className="p-4 border-b">{order._id}</td>
-                  <td className="p-4 border-b">{order.firstName} {order.lastName}</td>
-                  <td className="p-4 border-b">{order.email}</td>
-                  <td className="p-4 border-b">Rs.{order.totalAmount}</td>
-                  <td className="p-4 border-b">{new Date(order.date).toLocaleDateString()}</td>
-                  <td className="p-4 border-b">
+                <tr key={order._id} className="hover:bg-gray-100">
+                  <td className="p-2 sm:p-4 border-b text-xs sm:text-base">{order._id}</td>
+                  <td className="p-2 sm:p-4 border-b text-xs sm:text-base">{order.firstName} {order.lastName}</td>
+                  <td className="p-2 sm:p-4 border-b text-xs sm:text-base">{order.email}</td>
+                  <td className="p-2 sm:p-4 border-b text-xs sm:text-base">Rs.{order.totalAmount}</td>
+                  <td className="p-2 sm:p-4 border-b text-xs sm:text-base">{new Date(order.date).toLocaleDateString()}</td>
+                  <td className="p-2 sm:p-4 border-b text-xs sm:text-base">
                     <button
-                      className="px-4 py-2 bg-[#a00220] text-white font-semibold rounded-md shadow-sm hover:bg-[#a00220]/80 focus:outline-none"
+                      className="px-2 py-1 sm:px-4 sm:py-2 bg-[#a00220] text-white font-semibold rounded-md shadow-sm hover:bg-[#a00220]/80 focus:outline-none"
                       onClick={() => setSelectedOrder(order)}
                     >
                       View
@@ -131,4 +130,3 @@ const AdminOrders = () => {
 };
 
 export default AdminOrders;
-

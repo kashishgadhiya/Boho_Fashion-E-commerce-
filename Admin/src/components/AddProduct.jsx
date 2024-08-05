@@ -53,36 +53,36 @@ const AddProduct = () => {
   };
 
   return (
-    <div className='lg:px-20 lg:py-10 py-8 px-10 max-w-xl mx-auto lg:mx-0 '>
+    <div className='px-4 py-8 max-w-lg mx-auto lg:px-8 lg:py-10 lg:mx-1'>
       <div className='py-3'>
-        <p className='text-xl py-1'>Product title</p>
+        <p className='text-lg lg:text-xl py-1'>Product Title</p>
         <input 
           type='text' 
           name='name' 
           placeholder='Type Here' 
-          className='lg:w-96 py-1 px-2 border-2 rounded-lg outline-0 w-52' 
+          className='w-full lg:w-96 py-2 px-3 border-2 rounded-lg outline-0' 
           value={productDetails.name} 
           onChange={changeHandler}
         />
       </div>
 
       <div className='py-3'>
-        <p className='text-xl py-1'>Price</p>
+        <p className='text-lg lg:text-xl py-1'>Price</p>
         <input 
           type='text' 
           name='price' 
           placeholder='Type Here' 
-          className='lg:w-96 py-1 px-2 border-2 rounded-lg' 
+          className='w-full lg:w-96 py-2 px-3 border-2 rounded-lg' 
           value={productDetails.price} 
           onChange={changeHandler}
         />
       </div>
 
-      <p className='text-xl py-1'>Product Category</p>
+      <p className='text-lg lg:text-xl py-1'>Product Category</p>
       <div className='py-2'>
         <select 
           name="category" 
-          className='border-2 py-1 px-1 rounded-lg' 
+          className='border-2 py-2 px-3 rounded-lg w-full lg:w-96'
           value={productDetails.category} 
           onChange={changeHandler}
         >
@@ -92,11 +92,11 @@ const AddProduct = () => {
         </select>
       </div>
 
-      <div className='py-2'>
+      <div className='py-4'>
         <label htmlFor='file-input'>
           <img 
             src={image ? URL.createObjectURL(image) : upload} 
-            className='cursor-pointer max-w-sm h-52 w-44'
+            className='cursor-pointer max-w-full h-52 object-cover rounded-lg'
             alt="Upload Area"
           />
         </label>
@@ -110,7 +110,7 @@ const AddProduct = () => {
       </div>
 
       <button 
-        className='py-2 text-white px-5 rounded-lg mt-2' 
+        className='py-2 px-5 rounded-lg mt-2 w-full lg:w-auto text-white' 
         style={{ backgroundColor: '#a00220' }} 
         onClick={addProduct}
       >
@@ -121,3 +121,5 @@ const AddProduct = () => {
 };
 
 export default AddProduct;
+
+

@@ -1,6 +1,5 @@
-
 import React, { useEffect, useState } from 'react';
-import Loading from './Loading'; 
+import Loading from './Loading';
 
 const Subscribers = () => {
   const [subscribers, setSubscribers] = useState([]);
@@ -50,18 +49,18 @@ const Subscribers = () => {
   };
 
   return (
-    <div className='mt-5 w-[90%] mx-10'>
-      <h2 className='text-[#a00220] font-semibold text-2xl my-5'>Subscribers</h2>
-      <div className='mb-4'>
+    <div className='mt-5 px-4 sm:px-6 lg:px-8 w-full'>
+      <h2 className='text-[#a00220] font-semibold text-xl sm:text-2xl my-5'>Subscribers</h2>
+      <div className='mb-4 flex flex-col sm:flex-row sm:items-center sm:space-x-4'>
         <input
           type='text'
           placeholder='Search by email...'
-          className='py-2 px-4 border border-gray-300 rounded-lg w-full mb-2'
+          className='py-2 px-4 border border-gray-300 rounded-lg mb-2 sm:mb-0 w-full sm:w-1/2 lg:w-1/3'
           value={searchQuery}
           onChange={handleSearchChange}
         />
         <select
-          className='py-2 px-4 border border-gray-300 rounded-lg w-full'
+          className='py-2 px-4 border border-gray-300 rounded-lg w-full sm:w-1/2 lg:w-1/3'
           value={sortOrder}
           onChange={handleSortChange}
         >
@@ -76,16 +75,16 @@ const Subscribers = () => {
           <table className='min-w-full bg-white border border-gray-300'>
             <thead className='bg-gray-200'>
               <tr>
-                <th className='py-2 px-4 border-b text-left text-gray-600'>Email</th>
-                <th className='py-2 px-4 border-b text-left text-gray-600'>Subscribed At</th>
+                <th className='py-2 px-4 border-b text-left text-gray-600 text-xs sm:text-sm'>Email</th>
+                <th className='py-2 px-4 border-b text-left text-gray-600 text-xs sm:text-sm'>Subscribed At</th>
               </tr>
             </thead>
             <tbody>
               {filteredSubscribers.length > 0 ? (
                 filteredSubscribers.map((subscriber) => (
                   <tr key={subscriber._id} className='hover:bg-gray-100'>
-                    <td className='py-2 px-4 border-b'>{subscriber.email}</td>
-                    <td className='py-2 px-4 border-b'>
+                    <td className='py-2 px-4 border-b text-xs sm:text-sm'>{subscriber.email}</td>
+                    <td className='py-2 px-4 border-b text-xs sm:text-sm'>
                       {new Date(subscriber.subscribedAt).toLocaleString()}
                     </td>
                   </tr>

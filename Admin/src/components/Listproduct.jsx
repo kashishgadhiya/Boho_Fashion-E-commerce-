@@ -1,5 +1,4 @@
 
-
 import React, { useEffect, useState } from 'react';
 import Loading from './Loading';
 
@@ -9,14 +8,14 @@ const Listproduct = () => {
   const [totalCount, setTotalCount] = useState(0);
 
   const fetchInfo = async () => {
-    setLoading(false); 
+    setLoading(true);
     await fetch('https://boho-fashion-e-commerce.onrender.com/allproduct')
       .then((res) => res.json())
       .then((data) => {
         setAllproduct(data);
-        setTotalCount(data.length); 
+        setTotalCount(data.length);
       })
-      .finally(() => setLoading(false)); 
+      .finally(() => setLoading(false));
   };
 
   useEffect(() => {
@@ -24,7 +23,7 @@ const Listproduct = () => {
   }, []);
 
   const removeProduct = async (id) => {
-    setLoading(true); 
+    setLoading(true);
     await fetch("https://boho-fashion-e-commerce.onrender.com/removeproduct", {
       method: 'POST',
       headers: {
@@ -33,30 +32,28 @@ const Listproduct = () => {
       },
       body: JSON.stringify({ id: id })
     });
-    await fetchInfo(); 
+    await fetchInfo();
   };
 
   return (
-    <div className='py-10 px-2 '>
-      <h1 className='text-2xl font-semibold text-center mx-auto'>All Products List</h1>
-      <div className='flex lg:justify-end px-2 my-2 justify-center '>
+    <div className='py-10 px-4 md:px-6 lg:px-8 w-full '>
+      <h1 className='text-2xl font-semibold text-center mb-4'>All Products List</h1>
+      <div className='flex justify-center md:justify-end px-2 mb-4'>
         <p className='text-md font-semibold'>Total Products: {totalCount}</p>
       </div>
       
       {loading ? (
-       <Loading/>
+        <Loading />
       ) : (
-        <div className='flex flex-wrap gap-3  h-12 mt-5  '>
+        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 overflow-y-auto max-h-[80vh]'>
           {allproduct.map((product, index) => (
-            <div key={index} className=''>
-              <img src={product.image} className='h-24 w-24' alt={product.name} />
-              <p className='text-md'>{product.name.slice(0,10)+"..."}</p>
-             
-              <p>Rs.{product.price}</p>
-              <p>{product.category}</p>
+            <div key={index} className='border border-gray-300 p-4 rounded-lg shadow-md flex flex-col items-center'>
+              <img src={product.image} className='h-32 w-32 object-cover mb-2' alt={product.name} />
+              <p className='text-md font-medium mb-1'>{product.name.length > 15 ? `${product.name.slice(0, 15)}...` : product.name}</p>
+              <p className='text-lg font-semibold mb-1'>Rs.{product.price}</p>
+              <p className='text-sm text-gray-600 mb-2'>{product.category}</p>
               <button
-                className='text-white rounded-lg px-1 py-1 text-sm'
-                style={{ backgroundColor: '#a00220' }}
+                className='bg-[#a00220] text-white rounded-lg px-3 py-1 text-sm'
                 onClick={() => {
                   removeProduct(product.id);
                 }}
@@ -66,7 +63,6 @@ const Listproduct = () => {
             </div>
           ))}
         </div>
-        
       )}
     </div>
   );
