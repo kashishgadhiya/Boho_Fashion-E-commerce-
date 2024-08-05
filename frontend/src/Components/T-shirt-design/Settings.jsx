@@ -111,8 +111,15 @@ const Settings = ({ color, uppertextword, lowertextword, textSizechanges, textCo
                 </select>
             </div>
             <hr />
-            <button onClick={handleSave} className='border-2 px-4 py-2 text-white lg:my-5 my-2 hover:border-0' style={{ backgroundColor: '#a00220' }}> Save & BUY IT NOW </button>
-            {/* <button onClick={handleAddToCart} className='border-2 px-4 py-2 text-white lg:my-5 my-2 hover:border-0' style={{ backgroundColor: '#a00220' }}> </button> */}
+         <button onClick={handleSave} className='border-2 px-4 py-2 text-white lg:my-5 my-2 hover:border-0' style={{ backgroundColor: '#a00220' }}> Save & BUY IT NOW </button> 
+            {/* <button
+            type="button"
+            className="px-4 py-2 bg-[#a00220] text-white font-semibold rounded-md shadow-sm hover:bg-[#a00220]/80 focus:outline-none focus:ring-2 focus:ring-[#a00220] mt-6"
+            onClick={handleSaveAndProceed}
+          >
+            Save & Proceed To Payment
+          </button> */}
+            
         </div>
     );
 };

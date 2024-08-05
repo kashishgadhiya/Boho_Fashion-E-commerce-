@@ -8,10 +8,12 @@ import About from "../Components/About/About";
 import Animalrescue from "../Components/AnimalRescue/Animalrescue";
 import Reviewnew from "../Components/Review/Reviewnew";
 import Services from "../Components/Services/Services";
+import Cardloading from "../Components/Cardloading/Cardloading";
 
 const Shop = () => {
   return (
     <>
+
       <Hero />
       <div className="max-w-5xl mx-auto">
         <Popular />
