@@ -59,7 +59,7 @@ const Popular = () => {
   };
 
   useEffect(() => {
-    fetch('https://e-commerce-website-h0yp.onrender.com/popularinwomen')
+    fetch('https://boho-fashion-e-commerce.onrender.com/popularinwomen')
       .then((res) => res.json())
       .then((data) => {
         setPopular(data); 

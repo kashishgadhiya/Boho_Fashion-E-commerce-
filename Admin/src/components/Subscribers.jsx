@@ -12,7 +12,7 @@ const Subscribers = () => {
   const fetchSubscribers = async () => {
     setLoading(true);
     try {
-      const response = await fetch('http://localhost:4000/subscribersdata');
+      const response = await fetch('https://boho-fashion-e-commerce.onrender.com/subscribersdata');
       const data = await response.json();
       setSubscribers(data);
       setFilteredSubscribers(data);
@@ -51,6 +51,7 @@ const Subscribers = () => {
 
   return (
     <div className='mt-5 w-[90%] mx-10'>
+      <h2 className='text-[#a00220] font-semibold text-2xl my-5'>Subscribers</h2>
       <div className='mb-4'>
         <input
           type='text'
@@ -71,7 +72,7 @@ const Subscribers = () => {
       {loading ? (
         <Loading />
       ) : (
-        <div className='overflow-x-auto'>
+        <div className='overflow-x-auto overflow-y-auto max-h-[80vh]'>
           <table className='min-w-full bg-white border border-gray-300'>
             <thead className='bg-gray-200'>
               <tr>

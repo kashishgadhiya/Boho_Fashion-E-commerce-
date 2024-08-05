@@ -12,7 +12,7 @@ require("dotenv").config();
 const product = require("./models/product");
 const Subscriber = require("./models/emailSubscribe");
 const User = require("./models/user");
-const orderModel = require("./models/order");
+const Order = require('./models/order');
 const ProductDesign = require("./models/productDesign");
 // const Subscriber = require("./models/emailSubscribe")
 const stripe = require("stripe")(process.env.STRIPE_SECRETKEY);
@@ -49,8 +49,8 @@ app.post("/create-checkout-session", async (req, res) => {
     payment_method_types: ["card"],
     line_items: lineItems,
     mode: "payment",
-    success_url: "https://boho-fashion-e-commerce.onrender.com/success",
-    cancel_url: "https://boho-fashion-e-commerce.onrender.com/fail",
+    success_url: "https://boho-fashion-e-commerce.vercel.app/success",
+    cancel_url: "https://boho-fashion-e-commerce.vercel.app/fail",
   });
   res.json({ id: session.id });
 });
@@ -323,6 +323,52 @@ app.post("/subscribe", async (req, res) => {
     res.status(500).json({ message: "Subscription failed" });
   }
 });
+
+//save order
+app.post('/save-order', async (req, res) => {
+  try {
+      const { formData, cartItems, totalAmount, userId } = req.body;
+
+    
+      const newOrder = new Order({
+          ...formData,
+          cartItems,
+          totalAmount
+      });
+
+      await newOrder.save();
+
+    
+      if (userId) {
+          await User.findByIdAndUpdate(userId, {
+              $push: { orders: newOrder._id }
+          });
+      }
+
+      res.status(201).json({ message: 'Order saved successfully', order: newOrder });
+  } catch (error) {
+      res.status(500).json({ error: error.message });
+  }
+});
+
+
+// Fetch all orders
+app.get('/orders', async (req, res) => {
+  try {
+    const orders = await Order.find(); // Fetch all orders from the database
+    res.status(200).json(orders);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+
+
+
+
+
+
+
 
 app.listen(port, (error) => {
   if (!error) {

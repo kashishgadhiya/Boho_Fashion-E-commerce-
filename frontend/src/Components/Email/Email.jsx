@@ -40,7 +40,7 @@ const Email = () => {
         return;
       }
 
-      const response = await fetch('https://e-commerce-website-h0yp.onrender.com/subscribe', {
+      const response = await fetch('https://boho-fashion-e-commerce.onrender.com/subscribe', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

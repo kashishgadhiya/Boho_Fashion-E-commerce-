@@ -1,5 +1,6 @@
-import { loadStripe } from '@stripe/stripe-js';
+
 import React, { useContext } from 'react';
+import {useNavigate} from "react-router-dom"
 import { ShopContext } from '../../Context/ShopContext';
 import delete_icon from "../Assets/delete_icon.png";
 
@@ -13,47 +14,11 @@ const CardItem = () => {
     const decreaseQuantity = (productId) => {
         removeFromCart(productId);
     };
+    const navigate = useNavigate();
 
-    const handleMakePayment = async () => {
-        const cardDetails = all_product.map(product => {
-            if (cartItems[product.id] > 0) {
-                return {
-                    id: product.id,
-                    name: product.name,
-                    price: product.price,
-                    quantity: cartItems[product.id],
-                    total: product.price * cartItems[product.id],
-                    image: product.image
-                };
-            }
-            return null;
-        }).filter(item => item !== null); 
-
-        const stripe = await loadStripe('pk_test_51PgV8VGFvdjb00UZ5njNHVglF5yyvu2tcp642MU5WLXgLcC30Yxwi4iIu8OE24XgKMt463tFakzs32Lpdo5ydrnb00qVYhXhWN');
-       
-        const body = {
-            products: cardDetails
-        };
-
-        const headers = {
-            "Content-Type": "application/json"
-        };
-
-        const response = await fetch("https://boho-fashion-e-commerce.onrender.com/create-checkout-session", {
-            method: "POST",
-            headers: headers,
-            body: JSON.stringify(body)
-        });
-
-        const session = await response.json();
-        const result = await stripe.redirectToCheckout({
-            sessionId: session.id
-        });
-
-        if (result.error) {
-            console.log(result.error);
-        }
-    };
+    const handleClick = () => {
+        navigate('/order');
+      };
 
     return (
         <div className='mx-auto max-w-3xl mt-10'>
@@ -101,7 +66,8 @@ const CardItem = () => {
                     <strong>Rs.{getTotalCartAmount()}</strong>
                 </div>
                 <hr />
-                <button className='py-2 text-white px-2 my-4 mx-20 lg:mx-0' style={{ backgroundColor: '#a00220' }} onClick={handleMakePayment}>PROCEED TO CHECKOUT</button>
+              
+                <button className='py-2 text-white px-2 my-4 mx-20 lg:mx-0' style={{ backgroundColor: '#a00220' }} onClick={handleClick}>PROCEED TO CHECKOUT</button>
             </div>
         </div>
     );

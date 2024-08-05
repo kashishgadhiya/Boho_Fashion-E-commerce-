@@ -73,7 +73,7 @@ const LoginSignup = () => {
 
     console.log("Login Function", formdata);
     let responseData;
-    await fetch("https://e-commerce-website-h0yp.onrender.com/login", {
+    await fetch("https://boho-fashion-e-commerce.onrender.com/login", {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -89,8 +89,8 @@ const LoginSignup = () => {
 
       // Check if the user is admin
       if (
-        formdata.email === "kashishgadhiya24@gmail.com" &&
-        formdata.password === "123456789"
+        formdata.email === "test2605@gmail.com" &&
+        formdata.password === "*********"
       ) {
         window.location.replace("https://boho-fashion-admin.vercel.app/");
       } else {
@@ -106,7 +106,7 @@ const LoginSignup = () => {
 
     console.log("Signup Function", formdata);
     let responseData;
-    await fetch("https://e-commerce-website-h0yp.onrender.com/signup", {
+    await fetch("https://boho-fashion-e-commerce.onrender.com/signup", {
       method: 'POST',
       headers: {
         Accept: 'application/json',

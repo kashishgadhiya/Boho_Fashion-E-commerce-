@@ -1,9 +1,10 @@
 
 
-
+import {useNavigate} from "react-router-dom"
 import React, { useContext, useState } from "react";
 import { FaShoppingCart } from "react-icons/fa";
 import "./NavBar.css";
+// import { CgProfile } from "react-icons/cg";
 import { Link } from "react-router-dom";
 import logo from "../Assets/logo.png";
 import { FaBarsStaggered } from "react-icons/fa6";
@@ -28,6 +29,11 @@ const NavBar = () => {
     localStorage.removeItem("auth-token");
     window.location.replace("/");
   };
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+      navigate('/profile');
+    };
 
   return (
     <>
@@ -80,7 +86,7 @@ const NavBar = () => {
               </li>
             </ul>
 
-
+            {/* <CgProfile /> */}
             {localStorage.getItem("auth-token") ? (
               <button
                 onClick={handleLogout}
@@ -143,6 +149,10 @@ const NavBar = () => {
 
         {/* Login */}
         <div className="flex justify-center items-center gap-4 px-5">
+          <div onClick={handleClick} className="cursor-pointer">
+        {/* <CgProfile className="text-2xl" />  */}
+
+          </div>
           {localStorage.getItem("auth-token") ? (
             <button
               onClick={handleLogout}

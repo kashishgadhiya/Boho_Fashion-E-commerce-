@@ -1,35 +1,28 @@
 const { Schema, model, models } = require("mongoose");
 
 const orderSchema = new Schema({
-    name:{
-        type:String,
-
-    },
-    amount:{
-        type:Number
-      
-
-        },
-        order_id:{
-            type:String,
-        },
-        razorpay_payment_id:{
-            type:String,
-            default:null
-        },
-        razorpay_order_id:{
-            type:String,
-            default:null
-        },
-        razorpay_signature:{
-            type:String,
-            default:null
-        }
-    },
+    userId: { type: Schema.Types.String, ref: 'User' },
+    firstName: String,
+    lastName: String,
+    email: { type: String, required: true },
+    street: String,
+    city: String,
+    state: String,
+    pinCode: String,
+    country: String,
+    phoneNumber: String,
+    cartItems: [
         {
-            timestamps:true
-        
-  
+            id: String,
+            name: String,
+            price: Number,
+            quantity: Number,
+            total: Number,
+            image: String
+        }
+    ],
+    totalAmount: Number,
+    date: { type: Date, default: Date.now }
 });
 
-module.exports = models?.User || model('order', orderSchema);
+module.exports = models?.Order || model('Order', orderSchema);

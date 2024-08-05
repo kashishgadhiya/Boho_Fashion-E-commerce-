@@ -3,6 +3,7 @@ import { CiViewList } from "react-icons/ci";
 import { MdAddCircleOutline } from "react-icons/md";
 import { FiUsers } from "react-icons/fi";
 import { LuMailPlus } from "react-icons/lu";
+import { GiLoincloth } from "react-icons/gi";
 
 import { Link } from "react-router-dom";
 
@@ -22,6 +23,14 @@ const Sildebar = () => {
                 <div className='flex gap-3 items-center lg:py-5 lg:text-xl font-semibold px-4 text-lg py-2'>
                 <CiViewList  className='font-semibold'/>
                     <p>Product List</p>
+                </div>
+
+            </Link>
+            <Link to={'/orders'} className="">
+
+                <div className='flex gap-3 items-center lg:py-5 lg:text-xl font-semibold px-4 text-lg py-2'>
+                <GiLoincloth   className='font-semibold'/>
+                    <p>Order</p>
                 </div>
 
             </Link>

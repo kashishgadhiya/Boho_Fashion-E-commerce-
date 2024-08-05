@@ -11,6 +11,8 @@ import Product from './Pages/Product';
 import ShopCategory from "./Pages/ShopCategory";
 import Fail from "./Components/CardItem/Fail";
 import Success from "./Components/CardItem/Success";
+import Orderdata from "./Components/OrderData/Orderdata"
+import Profile from "./Pages/Profile";
 
 function App() {
   return (
@@ -30,6 +32,8 @@ function App() {
                <Route path='/make' element={<Dashboard/>}></Route>
                <Route path='/login' element={<LoginSignup/>}></Route>
                <Route path='/cart' element={<Cart/>}></Route>
+               <Route path='/order' element={<Orderdata/>}></Route>
+               <Route path='/profile' element={<Profile/>}></Route>
                <Route path='/success' element={<Success/>}></Route>
                <Route path='/fail' element={<Fail/>}></Route>
 

@@ -1,6 +1,4 @@
 
-
-
 import React, { useEffect, useState } from 'react';
 import Loading from './Loading'; 
 const User = () => {
@@ -13,7 +11,7 @@ const User = () => {
   const fetchUsers = async () => {
     setLoading(true);
     try {
-      const response = await fetch('http://localhost:4000/users');
+      const response = await fetch('https://boho-fashion-e-commerce.onrender.com/users');
       const data = await response.json();
       setUsers(data);
       setFilteredUsers(data);
@@ -51,7 +49,8 @@ const User = () => {
   };
 
   return (
-    <div className='mt-5 w-[90%] mx-10'>
+    <div className='mt-5 w-[90%] mx-10 '>
+       <h2 className='text-[#a00220] font-semibold text-2xl my-5'>All Users</h2>
       <div className='mb-4'>
         <input
           type='text'
@@ -72,7 +71,7 @@ const User = () => {
       {loading ? (
         <Loading />
       ) : (
-        <div className='overflow-x-auto'>
+        <div className='overflow-x-auto overflow-y-auto max-h-[70vh]'>
           <table className='min-w-full bg-white border border-gray-300'>
             <thead className='bg-gray-200'>
               <tr>

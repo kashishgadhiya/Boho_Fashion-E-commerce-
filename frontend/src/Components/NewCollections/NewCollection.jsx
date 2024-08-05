@@ -10,7 +10,7 @@ const NewCollection = () => {
   const gridRef = useRef(null);
 
   useEffect(() => {
-    fetch('https://e-commerce-website-h0yp.onrender.com/newcollection')
+    fetch('https://boho-fashion-e-commerce.onrender.com/newcollection')
       .then((res) => res.json())
       .then((data) => {
         setNew_collection(data);

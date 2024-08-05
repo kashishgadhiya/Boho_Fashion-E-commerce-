@@ -10,7 +10,7 @@ const Listproduct = () => {
 
   const fetchInfo = async () => {
     setLoading(false); 
-    await fetch('https://e-commerce-backend-2-bxa8.onrender.com/allproduct')
+    await fetch('https://boho-fashion-e-commerce.onrender.com/allproduct')
       .then((res) => res.json())
       .then((data) => {
         setAllproduct(data);
@@ -25,7 +25,7 @@ const Listproduct = () => {
 
   const removeProduct = async (id) => {
     setLoading(true); 
-    await fetch("https://e-commerce-backend-2-bxa8.onrender.com/removeproduct", {
+    await fetch("https://boho-fashion-e-commerce.onrender.com/removeproduct", {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -46,11 +46,12 @@ const Listproduct = () => {
       {loading ? (
        <Loading/>
       ) : (
-        <div className='flex flex-wrap gap-3  h-12 mt-5  flex-col '>
+        <div className='flex flex-wrap gap-3  h-12 mt-5  '>
           {allproduct.map((product, index) => (
             <div key={index} className=''>
               <img src={product.image} className='h-24 w-24' alt={product.name} />
-              <p className='text-md'>{product.name}</p>
+              <p className='text-md'>{product.name.slice(0,10)+"..."}</p>
+             
               <p>Rs.{product.price}</p>
               <p>{product.category}</p>
               <button
