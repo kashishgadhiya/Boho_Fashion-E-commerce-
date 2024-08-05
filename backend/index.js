@@ -1,4 +1,4 @@
-const port = 4000;
+const port = process.env.PORT || 4000;
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
@@ -20,6 +20,7 @@ const stripe = require("stripe")(process.env.STRIPE_SECRETKEY);
 app.use(express.json());
 app.use(cors());
 app.use(bodyParser.json());
+
 
 mongoose
   .connect(process.env.MONGO_URL, {
@@ -59,26 +60,7 @@ app.get("/", (req, res) => {
   res.send("Express is Running ");
 });
 
-// Image upload
-// const storage = multer.diskStorage({
-//   destination: "./upload/images",
-//   filename: (req, file, cb) => {
-//     cb(null, `${file.fieldname}_${Date.now()}${path.extname(file.originalname)}`);
-//   },
-// });
 
-// const upload = multer({ storage: storage });
-
-// // Endpoint for images
-// app.use("/images", express.static("upload/images"));
-// app.post("/upload", upload.single("product"), (req, res) => {
-//   res.json({
-//     success: 1,
-//     // image_url: `https://e-commerce-website-h0yp.onrender.com/images/${req.file.filename}`,
-//     image_url: `https://e-commerce-backend-2-bxa8.onrender.com/images/${req.file.filename}`,
-//     // image_url: `http://localhost:4000/images/${req.file.filename}`,
-//   });
-// });
 
 // Image upload
 const storage = multer.diskStorage({
@@ -99,9 +81,8 @@ app.use("/images", express.static("upload/images"));
 app.post("/upload", upload.single("product"), (req, res) => {
   const baseUrl = process.env.BASE_URL;
   console.log(baseUrl);
-  const imageUrl = `${"https://boho-fashion-e-commerce.onrender.com"}/images/${
-    req.file.filename
-  }`;
+  const imageUrl = `${req.file.filename}`;
+  
 
   res.json({
     success: 1,

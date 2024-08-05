@@ -9,7 +9,7 @@ const Listproduct = () => {
   const [totalCount, setTotalCount] = useState(0);
 
   const fetchInfo = async () => {
-    setLoading(true); 
+    setLoading(false); 
     await fetch('https://e-commerce-backend-2-bxa8.onrender.com/allproduct')
       .then((res) => res.json())
       .then((data) => {
@@ -46,7 +46,7 @@ const Listproduct = () => {
       {loading ? (
        <Loading/>
       ) : (
-        <div className='flex flex-wrap gap-3  h-12 mt-5 '>
+        <div className='flex flex-wrap gap-3  h-12 mt-5  flex-col '>
           {allproduct.map((product, index) => (
             <div key={index} className=''>
               <img src={product.image} className='h-24 w-24' alt={product.name} />
