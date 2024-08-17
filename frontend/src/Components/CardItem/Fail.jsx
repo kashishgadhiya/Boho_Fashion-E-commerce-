@@ -14,11 +14,11 @@ const Fail = () => {
         <h2 className="text-xl font-bold mb-2 text-red-600">Payment Failed</h2>
         <p className="text-gray-600 mb-4">There was an issue with your payment. Please try again.</p>
         <Link
-          href="/cart"
+          to="/"
           className="inline-block px-6 py-2 text-white rounded-lg hover:bg-white hover:text-[#a00220] hover:border-[#a00220] transition-colors bg-[#a00200]"
           style={{ border: "1px solid #a00220" }}
         >
-          Retry Payment
+          Go back to home
         </Link>
       </div>
     </div>

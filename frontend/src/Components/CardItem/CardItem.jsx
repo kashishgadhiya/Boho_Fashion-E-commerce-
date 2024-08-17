@@ -1,6 +1,6 @@
-
+import { Link } from "react-router-dom";
 import React, { useContext } from 'react';
-import {useNavigate} from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 import { ShopContext } from '../../Context/ShopContext';
 import delete_icon from "../Assets/delete_icon.png";
 
@@ -18,7 +18,9 @@ const CardItem = () => {
 
     const handleClick = () => {
         navigate('/order');
-      };
+    };
+
+    const isCartEmpty = all_product.every(product => cartItems[product.id] === 0);
 
     return (
         <div className='mx-auto max-w-3xl mt-10'>
@@ -49,26 +51,40 @@ const CardItem = () => {
                 }
                 return null;
             })}
-            <div className='lg:my-6 m-6 mt-10'>
-                <h1 className='text-2xl my-2 font-medium'>Cart Totals</h1>
-                <div className='flex justify-between my-2'>
-                    <p>Subtotal</p>
-                    <p>Rs.{getTotalCartAmount()}</p>
+
+            {!isCartEmpty ? (
+                <div className='lg:my-6 m-6 mt-10'>
+                    <h1 className='text-2xl my-2 font-medium'>Cart Totals</h1>
+                    <div className='flex justify-between my-2'>
+                        <p>Subtotal</p>
+                        <p>Rs.{getTotalCartAmount()}</p>
+                    </div>
+                    <hr />
+                    <div className='flex justify-between my-2'>
+                        <p>Shipping Fee</p>
+                        <p>Free</p>
+                    </div>
+                    <hr />
+                    <div className='flex justify-between my-2'>
+                        <p>Total</p>
+                        <strong>Rs.{getTotalCartAmount()}</strong>
+                    </div>
+                    <hr />
+                    <button className='py-2 text-white px-2 my-4 mx-20 lg:mx-0' style={{ backgroundColor: '#a00220' }} onClick={handleClick}>PROCEED TO CHECKOUT</button>
                 </div>
-                <hr />
-                <div className='flex justify-between my-2'>
-                    <p>Shipping Fee</p>
-                    <p>Free</p>
+            ) : (
+                <div className='text-center my-10'>
+                    <h2 className='text-center mt-4 text-gray-500'>Your cart is empty</h2>
+                    <p  className='text-center mt-1 text-gray-500'>Shop now to add items to your cart.</p>
+                    <Link
+           to="/"  
+          className="inline-block px-6 py-2 text-white rounded-lg hover:bg-white hover:text-[#a00220] hover:border-[#a00220] transition-colors bg-[#a00200]  my-10"
+          style={{ border: "1px solid #a00220" }}
+        >
+          Shop now
+        </Link>
                 </div>
-                <hr />
-                <div className='flex justify-between my-2'>
-                    <p>Total</p>
-                    <strong>Rs.{getTotalCartAmount()}</strong>
-                </div>
-                <hr />
-              
-                <button className='py-2 text-white px-2 my-4 mx-20 lg:mx-0' style={{ backgroundColor: '#a00220' }} onClick={handleClick}>PROCEED TO CHECKOUT</button>
-            </div>
+            )}
         </div>
     );
 }

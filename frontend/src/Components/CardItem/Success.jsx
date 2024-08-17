@@ -14,7 +14,7 @@ const Success = () => {
         <h2 className="text-xl font-bold mb-2">Payment Successful</h2>
         <p className="text-gray-600 mb-4">Thank you for your payment!</p>
         <Link
-          href="/"
+           to="/"  
           className="inline-block px-6 py-2 text-white rounded-lg hover:bg-white hover:text-[#a00220] hover:border-[#a00220] transition-colors bg-[#a00200]"
           style={{ border: "1px solid #a00220" }}
         >

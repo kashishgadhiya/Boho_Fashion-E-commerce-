@@ -35,7 +35,7 @@ const jwtSecret = process.env.JWT_SECRET;
 // payment
 app.post("/create-checkout-session", async (req, res) => {
   const { products } = req.body;
-  console.log(products);
+  // console.log(products);
   const lineItems = products.map((product) => ({
     price_data: {
       currency: "inr",
@@ -84,7 +84,6 @@ app.post("/upload", upload.single("product"), (req, res) => {
   const baseUrl = process.env.BASE_URL;
   console.log(baseUrl);
   // const imageUrl = `${req.file.filename}`;
-  //  const image_url = `https://e-commerce-website-h0yp.onrender.com/images/${req.file.filename}`;
   const imageUrl = `${"https://boho-fashion-e-commerce.onrender.com"}/images/${req.file.filename}`;
   
 
@@ -127,9 +126,9 @@ app.post("/addproduct", async (req, res) => {
     category: req.body.category,
     price: req.body.price,
   });
-  console.log(newproduct);
+  
   await newproduct.save();
-  console.log("save");
+
   res.json({
     success: true,
     name: req.body.name,
@@ -139,17 +138,16 @@ app.post("/addproduct", async (req, res) => {
 // Delete a product
 app.post("/removeproduct", async (req, res) => {
   await product.findOneAndDelete({ id: req.body.id });
-  // console.log("remove");
-  // For frontend
+  
   res.json({
     success: 1,
     name: req.body.name,
   });
 });
+
 // getting all product
 app.get("/allproduct", async (req, res) => {
   let products = await product.find({});
-  // console.log("All products")
   // .for frontend
   res.send(products);
 });
@@ -211,15 +209,13 @@ app.post("/login", async (req, res) => {
 app.get("/newcollection", async (req, res) => {
   let products = await product.find({});
   let newcollection = products.slice(1).slice(-8);
-  // console.log("new items")
-  res.send(newcollection);
+    res.send(newcollection);
 });
 
 // popular items
 app.get("/popularinwomen", async (req, res) => {
   let products = await product.find({ category: "women" });
-  let popular_in_women = products.slice(0, 4);
-  // console.log("popularinwomen")
+  let popular_in_women = products.slice(0, 7);
   res.send(popular_in_women);
 });
 // middleware to fetch user
@@ -245,7 +241,6 @@ const fetchUser = async (req, res, next) => {
 
 // cartdata
 app.post("/addtocart", fetchUser, async (req, res) => {
-  // console.log("added",req.body.itemId)
   let userData = await User.findOne({ _id: req.user.id });
   userData.cartData[req.body.itemId] += 1;
   await User.findOneAndUpdate(
@@ -257,7 +252,6 @@ app.post("/addtocart", fetchUser, async (req, res) => {
 
 // remove from cartdata
 app.post("/removefromcart", fetchUser, async (req, res) => {
-  // console.log("removed",req.body.itemId)
   let userData = await User.findOne({ _id: req.user.id });
   if (userData.cartData[req.body.itemId] > 0) {
     userData.cartData[req.body.itemId] -= 1;
@@ -271,8 +265,8 @@ app.post("/removefromcart", fetchUser, async (req, res) => {
 
 // //get cartdata
 app.post("/getcart", fetchUser, async (req, res) => {
-  // console.log("getcart")
-  let userData = await User.findOne({ _id: req.user.id });
+ 
+ let userData = await User.findOne({ _id: req.user.id });
   res.json(userData.cartData);
 });
 
@@ -374,7 +368,7 @@ app.post('/save-order', async (req, res) => {
 // Fetch all orders
 app.get('/orders', async (req, res) => {
   try {
-    const orders = await Order.find(); // Fetch all orders from the database
+    const orders = await Order.find(); 
     res.status(200).json(orders);
   } catch (error) {
     res.status(500).json({ error: error.message });

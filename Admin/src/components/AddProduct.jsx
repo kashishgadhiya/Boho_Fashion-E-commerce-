@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import upload from "../assets/upload_area.svg";
 
@@ -88,7 +87,7 @@ const AddProduct = () => {
         >
           <option value="women">Women</option>
           <option value="men">Men</option>
-          <option value="Kid">Kid</option>
+         
         </select>
       </div>
 

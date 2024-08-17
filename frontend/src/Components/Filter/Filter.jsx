@@ -35,6 +35,7 @@ const Filter = ({ products, setProducts }) => {
       <form>
         <label htmlFor="sort">Sort by : </label>
         <select name="sort" id="sort" onChange={handleSortChange} value={sortType} className='border-none outline-none'>
+        
           <option value="lowest">Price (lowest)</option>
           <option value="highest">Price (highest)</option>
           <option value="a-z">Name (A-Z)</option>

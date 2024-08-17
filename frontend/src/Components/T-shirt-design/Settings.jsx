@@ -1,7 +1,5 @@
 
-import React, { useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { ShopContext } from '../../Context/ShopContext';
+import React from 'react';
 import black from "../Assets/black.jpeg";
 import blue from "../Assets/blue_t-shirt.jpeg";
 import green from "../Assets/green_t-shirtt.jpeg";
@@ -10,8 +8,6 @@ import white from "../Assets/whitw_t-shirt.jpeg";
 
 const Settings = ({ color, uppertextword, lowertextword, textSizechanges, textColorchanges, display, Designimg }) => {
     
-    const {addTocart} = useContext(ShopContext)
-    const navigate = useNavigate();
 
     const handleSave = async () => {
         try {

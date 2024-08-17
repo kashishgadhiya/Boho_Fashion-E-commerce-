@@ -17,12 +17,12 @@ const ShopContextProvider = (props) => {
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
-    // Fetch products
+    
     fetch('https://e-commerce-website-h0yp.onrender.com/allproduct')
       .then((response) => response.json())
       .then((data) => setAll_Product(data));
 
-    // Check if user is logged in and admin
+   
     const authToken = localStorage.getItem('auth-token');
     if (authToken) {
       fetch('https://e-commerce-website-h0yp.onrender.com/checkadmin', {

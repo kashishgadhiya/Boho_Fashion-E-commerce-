@@ -64,7 +64,7 @@ const LoginSignup = () => {
 
   const changeHandler = (e) => {
     setFormData({ ...formdata, [e.target.name]: e.target.value });
-    // Clear error messages when user starts typing
+   
     setErrors({ ...errors, [e.target.name]: "" });
   };
 

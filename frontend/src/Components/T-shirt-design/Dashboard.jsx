@@ -4,26 +4,18 @@ import Settings from "./Settings";
 
 
 const Dashboard = () => {
- 
-  const [image, setImage] = useState(false);
-  const [productdetails, setProductdetails] = useState({
-    name: "",
-    image: "",
-    price: "",
-  });
-
-  const firstValue = {
+   const firstValue = {
     id:111,
     tshirtcolor: "black",
-    uppertext: "This is upper text",
-    lowertext: "This is lower text",
+    uppertext: "Boho",
+    lowertext: "Fashion",
     DesignImg: "first",
     textSize: 12,
     textColor :"white",
     price:899
   };
 
-  console.log(firstValue)
+  
   const [infostate, setInfoState] = useState(firstValue);
 
   const handleColor = (e) => {
@@ -53,7 +45,6 @@ const Dashboard = () => {
       textSize:parseInt(e.target.value) }));
   };
 
-  console.log(firstValue.textSize)
   const formatText = () => {
     const size = infostate.textSize;
     return parseInt(size);
@@ -67,11 +58,6 @@ const Dashboard = () => {
       }));
 
   }
-
-
- 
-  console.log(productdetails);
-
 
   const handleDesignimg = (e)=>{
     setInfoState(prevState => ({
